@@ -1,5 +1,6 @@
 package StudentSystem;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class StudentTest {
@@ -33,9 +34,21 @@ public class StudentTest {
                 String name = sc.nextLine();
                 System.out.print("Enter Student Major: ");
                 String major = sc.nextLine();
-                System.out.print("Enter Student GPA: ");
-                double gpa = sc.nextDouble();
-                manager.addStudent(id, name, major, gpa);
+                while (true) {
+                    System.out.print("Enter Student GPA: ");
+                    try {
+                        double gpa = sc.nextDouble();
+                        if (gpa < 0 || gpa > 4) {
+                            System.out.println("GPA must be between 0 and 4.");
+                        } else {
+                            manager.addStudent(id, name, major, gpa);
+                            break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid GPA. Please enter a number.");
+                        sc.nextLine();
+                    }
+                }
                 manager.saveToFile();
 
             } else if (cmd.equalsIgnoreCase("remove")) {
@@ -56,7 +69,7 @@ public class StudentTest {
                 System.out.print("Enter Student ID: ");
                 String id = sc.next();
                 Student stud = manager.searchStudent(id);
-                
+
                 while (stud != null) {
                     System.out.print("What would you like to update? (Name/Major/GPA): ");
                     String choice = sc.next();
@@ -76,9 +89,22 @@ public class StudentTest {
                         break;
 
                     } else if (choice.equalsIgnoreCase("gpa")) {
-                        System.out.print("Enter GPA: ");
-                        double newGPA = sc.nextDouble();
-                        stud.setGpa(newGPA);
+                        while (true) {
+                            System.out.print("Enter GPA: ");
+                            try {
+                                double newGPA = sc.nextDouble();
+                                if (newGPA < 0 || newGPA > 4) {
+                                    System.out.println("GPA must be between 0 and 4.");
+                                } else {
+                                    stud.setGpa(newGPA);
+                                    break;
+                                }
+
+                            } catch (InputMismatchException e) {
+                                System.out.println("Invalid GPA. Please enter a number.");
+                                sc.nextLine();
+                            }
+                        }
                         System.out.println("GPA updated successfully.");
                         break;
 
@@ -90,6 +116,7 @@ public class StudentTest {
                 manager.saveToFile();
 
             } else if (cmd.equalsIgnoreCase("exit")) {
+                System.out.println("Thank you for using Student Management System.");
                 break;
 
             } else {

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class StudentsManager {
     private ArrayList<Student> students = new ArrayList<Student>();
 
-    public void addStudent(String id, String name,String major, double gpa) {
-        for (Student s : students){
-            if (id.equals(s.getId())){
+    public void addStudent(String id, String name, String major, double gpa) {
+        for (Student s : students) {
+            if (id.equals(s.getId())) {
                 System.out.println("Student ID already exists.\n");
                 return;
             }
@@ -54,42 +54,41 @@ public class StudentsManager {
         return null;
     }
 
-    public void saveToFile(){
+    public void saveToFile() {
         try {
             BufferedWriter write = new BufferedWriter(
-                new FileWriter("C:\\Users\\admin\\MyProject\\StudentSystem\\StudentData"));
-            for (Student s : students){
-                write.write(s.getId()+",");
-                write.write(s.getName()+",");
-                write.write(s.getMajor()+",");
-                write.write(Double.toString(s.getGpa())+"\n");
+                    new FileWriter("C:\\Users\\admin\\MyProject\\StudentSystem\\StudentData"));
+            for (Student s : students) {
+                write.write(s.getId() + ",");
+                write.write(s.getName() + ",");
+                write.write(s.getMajor() + ",");
+                write.write(Double.toString(s.getGpa()) + "\n");
             }
             write.close();
-        }catch (Exception e){
-            return;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void loadFromFile(){
+    public void loadFromFile() {
         students.clear();
         try {
             BufferedReader reader = new BufferedReader(
-                new FileReader("C:\\Users\\admin\\MyProject\\StudentSystem\\StudentData"));
+                    new FileReader("C:\\Users\\admin\\MyProject\\StudentSystem\\StudentData"));
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] studentData = line.split(",");
                 Student s = new Student(
-                    studentData[0],
-                    studentData[1],
-                    studentData[2],
-                    Double.parseDouble(studentData[3]));
+                        studentData[0],
+                        studentData[1],
+                        studentData[2],
+                        Double.parseDouble(studentData[3]));
                 students.add(s);
             }
             reader.close();
             System.out.println("Data loaded successfully.");
-        } catch (Exception e){
-            return;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
     }
 }
