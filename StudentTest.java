@@ -13,16 +13,16 @@ public class StudentTest {
         System.out.println("- Update");
         System.out.println("- Exit");
         System.out.print("Enter your choice: ");
-        return;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        StudentsManager manager = new StudentsManager();
+        manager.loadFromFile();
         // Student s1 = new Student("02051997","Bambam","Got7",4.00);
         // System.out.println(s1.toString());
         showMenu();
 
-        StudentsManager manager = new StudentsManager();
         while (true) {
             String cmd = sc.next();
             if (cmd.equalsIgnoreCase("add")) {
@@ -36,11 +36,13 @@ public class StudentTest {
                 System.out.print("Enter Student GPA: ");
                 double gpa = sc.nextDouble();
                 manager.addStudent(id, name, major, gpa);
+                manager.saveToFile();
 
             } else if (cmd.equalsIgnoreCase("remove")) {
                 System.out.print("Enter Student ID: ");
                 String id = sc.next();
                 manager.removeStudent(id);
+                manager.saveToFile();
 
             } else if (cmd.equalsIgnoreCase("view")) {
                 manager.viewStudent();
@@ -76,14 +78,16 @@ public class StudentTest {
                     } else if (choice.equalsIgnoreCase("gpa")) {
                         System.out.print("Enter GPA: ");
                         double newGPA = sc.nextDouble();
-                        stud.setGPA(newGPA);
+                        stud.setGpa(newGPA);
                         System.out.println("GPA updated successfully.");
                         break;
 
                     } else {
                         System.out.println("Invalid choice. Please try again.");
                     }
+
                 }
+                manager.saveToFile();
 
             } else if (cmd.equalsIgnoreCase("exit")) {
                 break;

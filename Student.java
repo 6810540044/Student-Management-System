@@ -37,7 +37,7 @@ public class Student {
         this.major = major;
     }
 
-    public void setGPA(double gpa){
+    public void setGpa(double gpa){
         this.gpa = gpa;
     }
 
